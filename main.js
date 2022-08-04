@@ -1,6 +1,6 @@
 /** @TODO - Access the pokemon data from data.js */
 /**         and print to the console to check */
-
+console.log(pokemon)
 
 /** @TODO - Update the page data using a single pokemon */
 /**  
@@ -10,6 +10,21 @@
  *      4. Change the width of each stat bar using the 
  *          pokemon's base stats
  */
+const pokeNameHeading=document.getElementById('poke_name')
+pokeNameHeading.innerHTML="#"+pokemon[0].id+ " - "+pokemon[0].name
+
+const pokeImg=document.querySelector('#poke_img')
+pokeImg.src=pokemon[0].image[0]
+
+const typeHeading=document.getElementById('poke_types')
+typeHeading.innerHTML=pokemon[0].type[0]+"/"+pokemon[0].type[1]+ " type"
+
+const statDivs = document.querySelectorAll("#poke_stats div");
+for(let i = 0; i < statDivs.length; i++){
+    let stat = statDivs[i].id;
+    let statWidth=(pokemon[0].base[stat]/100)*400
+    statDivs[i].style["width"] = statWidth+"px"
+}
 
 
 /** @TODO - Assign #random_btn to pick a random starter on click */
@@ -21,3 +36,23 @@
  *          to the randomly-chosen pokemon
  *      4. Add an eventListener to #random_btn with our new function!
  */
+
+const randomizerButton=document.getElementById('random_btn')
+
+function getPokemonData(){
+    let randomIndex=Math.floor(Math.random()*pokemon.length)
+    let randomPokemon=pokemon[randomIndex]
+    pokeNameHeading.innerHTML="#"+randomPokemon.id+ " - "+randomPokemon.name
+    pokeImg.src=randomPokemon.image[0]
+    typeHeading.innerHTML=randomPokemon.type[0]+"/"+randomPokemon.type[1]+ " type"
+    for(let i = 0; i < statDivs.length; i++){
+        let stat = statDivs[i].id;
+        let statWidth=(randomPokemon.base[stat]/100)*400
+        statDivs[i].style["width"] = statWidth+"px"
+    }
+}
+
+randomizerButton.onclick=function(event){
+    event.preventDefault()
+    getPokemonData()
+}
